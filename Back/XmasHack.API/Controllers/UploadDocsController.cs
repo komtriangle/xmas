@@ -48,6 +48,7 @@ namespace XmasHack.API.Controllers
         private  async Task SaveDocsToFolder(IFormFile file, string docsName)
         {
             string filePath = Path.Combine(_appSettings.DocumentPath, docsName);
+            Console.WriteLine(filePath);
             using (Stream fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);
