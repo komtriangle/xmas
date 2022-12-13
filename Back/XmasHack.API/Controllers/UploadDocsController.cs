@@ -37,7 +37,7 @@ namespace XmasHack.API.Controllers
                 }
                 catch(Exception ex)
                 {
-                    return BadRequest($"Ошибка во время сохрвнения файла: {file.FileName}");
+                    return BadRequest($"Ошибка во время сохрвнения файла: {file.FileName}. {ex.Message}");
                 }
                
             }
