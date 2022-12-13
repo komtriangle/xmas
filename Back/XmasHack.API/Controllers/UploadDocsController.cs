@@ -47,6 +47,7 @@ namespace XmasHack.API.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllFiles")]
         public async Task<IActionResult> GetAllFiles()
         {
             return Ok(new FileResponse[]
