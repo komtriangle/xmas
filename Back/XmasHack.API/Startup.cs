@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
 using XmasHack.API.Configuration;
+using XmasHack.API.CRUD_API;
 
 namespace XmasHack.API
 {
@@ -28,6 +29,8 @@ namespace XmasHack.API
 
             var rabbitMQConfing = _configuration.GetSection("RabbitMQConfig");
             services.Configure<RabbitMQConfig>(rabbitMQConfing);
+
+            services.AddTransient<ICrudAPI, CrudAPI>();
 
 
             services.AddCors(options =>

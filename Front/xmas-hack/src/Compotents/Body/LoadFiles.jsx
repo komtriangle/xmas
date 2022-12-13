@@ -25,7 +25,7 @@ function LoadFiles(props) {
             formData.append("files", file);
         })
         try {
-            const res = axios.post("https://localhost:7176/UploadDocs", formData);
+            const res = axios.post("http://85.192.34.254:8888/UploadDocs", formData);
         } catch (ex) {
             console.log(ex);
         }
