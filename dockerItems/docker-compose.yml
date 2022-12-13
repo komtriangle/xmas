@@ -37,7 +37,7 @@ services:
   nginx-static:
     image: nginx:latest
     ports:
-      - '8001:80'
+      - '8005:80'
     restart: always
     volumes:
       - ../documents:/usr/share/nginx/html
