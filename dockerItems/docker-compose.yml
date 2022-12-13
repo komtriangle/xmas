@@ -35,12 +35,14 @@ services:
       - '8888:80'
 
   nginx-static:
-    image: nginx:latest
-    ports:
-      - '8005:80'
-    restart: always
-    volumes:
-      - ../documents:/usr/share/nginx/html
+      container_name: nginx-static
+      image: nginx-static
+      build:
+          context: ../
+          dockerfile: nginx/Dockerfile
+      restart: always
+      ports:
+          - "8005:80"
 
 networks:
   xmas:
