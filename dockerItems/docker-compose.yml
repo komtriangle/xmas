@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+  # rabbitmq:
+  #   image: rabbitmq:3-management-alpine
+  #   restart: always
+  #   ports:
+  #     - '15672:15672'
+  #     - '5672:5672'
+  #   environment:
+  #     - RABBITMQ_NODE_TYPE=stats
+  #     - RABBITMQ_NODE_NAME=rabbit@stats
+  #     - RABBITMQ_DEFAULT_USER=xmasuser
+  #     - RABBITMQ_DEFAULT_PASS=xmaspassword
+  #   networks:
+  #       - xmas
+  # postgres:
+  #   image: postgres:14.1-alpine
+  #   restart: always
+  #   env_file:
+  #     - postgres.env
+  #   ports:
+  #     - '5432:5432'
+  #   environment:
+  #     PGDATA: "/var/lib/postgresql/data/pgdata"
+  #   volumes:
+  #     - ./pg_data:/var/lib/postgresql/data
+  api:
+    image: ${DOCKER_REGISTRY-}xmas-api
+    build:
+      context: ../
+      dockerfile: Back/XmasHack.API/Dockerfile
+    volumes:
+      - ../documents:/documents
+    ports:
+      - '8888:80'
+
+  nginx-static:
+    image: nginx:latest
+    ports:
+      - '8001:80'
+    restart: always
+    volumes:
+      - ../documents:/usr/share/nginx/html
+
+networks:
+  xmas:
+    driver: bridge
