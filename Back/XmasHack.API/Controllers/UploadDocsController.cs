@@ -4,6 +4,8 @@ using XmasHack.API.Configuration;
 using XmasHack.API.CRUD_API;
 using XmasHack.API.CRUD_API.Models.Requests;
 using XmasHack.API.Models;
+using XmasHack.API.RabbitMQ;
+using XmasHack.API.RabbitMQ.Contracts;
 
 namespace XmasHack.API.Controllers
 {
@@ -14,12 +16,15 @@ namespace XmasHack.API.Controllers
     {
         private readonly AppSettings _appSettings;
         private readonly ICrudAPI _crudAPI;
+        private readonly RabbitMQDocsPublisher _rabbitMQDocsPublisher;
 
-        public UploadDocsController(IOptions<AppSettings> appSettings, ICrudAPI crudAPI)
+        public UploadDocsController(IOptions<AppSettings> appSettings, IOptions<RabbitMQConfig> rabbitMQConfig, ICrudAPI crudAPI)
         {
             _appSettings = appSettings.Value;
             _crudAPI = crudAPI;
+            _rabbitMQDocsPublisher = new RabbitMQDocsPublisher(rabbitMQConfig.Value);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> UploadDocs([FromForm] List<IFormFile> files)
@@ -30,10 +35,15 @@ namespace XmasHack.API.Controllers
                 {
                     string fileName = $"{Guid.NewGuid()}-{file.FileName}";
                     await SaveDocsToFolder(file, fileName);
-                    await _crudAPI.SaveDocs(new SaveDocsRequest()
+                    int docsId = await _crudAPI.SaveDocs(new SaveDocsRequest()
                     {
                         FileName = file.FileName,
                         FilePath = fileName
+                    });
+
+                    _rabbitMQDocsPublisher.Send(new DocsMessage()
+                    {
+                        Id = docsId
                     });
                 }
                 catch(Exception ex)

@@ -14,14 +14,13 @@ namespace XmasHack.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen();
 
             services.Configure<FormOptions>(x =>
             {
                 x.ValueLengthLimit = int.MaxValue;
-                x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
+                x.MultipartBodyLengthLimit = int.MaxValue;
             });
 
             var appSettings = _configuration.GetSection("AppSettings");
@@ -31,6 +30,13 @@ namespace XmasHack.API
             services.Configure<RabbitMQConfig>(rabbitMQConfing);
 
             services.AddTransient<ICrudAPI, CrudAPI>();
+
+            services.AddHttpClient("CrudAPI", config =>
+            {
+                config.BaseAddress = new Uri("https://localhost:5001/api/");
+                config.Timeout = new TimeSpan(0, 0, 30);
+                config.DefaultRequestHeaders.Clear();
+            });
 
 
             services.AddCors(options =>
@@ -47,10 +53,8 @@ namespace XmasHack.API
 
         }
 
-   
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // Configure the HTTP request pipeline.
             if (env.IsDevelopment())
             {
                 app.UseSwagger();

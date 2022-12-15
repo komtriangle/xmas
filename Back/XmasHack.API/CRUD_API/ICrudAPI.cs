@@ -4,6 +4,6 @@ namespace XmasHack.API.CRUD_API
 {
     public interface ICrudAPI
     {
-        public Task SaveDocs(SaveDocsRequest request);
+        public Task<int> SaveDocs(SaveDocsRequest request);
     }
 }

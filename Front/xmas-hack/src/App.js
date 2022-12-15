@@ -1,35 +1,20 @@
-import logo from './logo.svg';
 import './styles/styles.scss';
-import Header from "./Compotents/Header/Header";
-import Body from "./Compotents/Body/Body";
-import SpinnerComp from './Compotents/SpinnerComp';
-import { connect } from "react-redux"
-import { NotificationContainer } from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+import Work from './Compotents/Work';
+import ErrorFeedBack from "./Compotents/ErrorFeedback"
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-function App(props) {
+function App() {
   return (
-    <div className="App">
-      <NotificationContainer />
-      <Header />
-      <Body />
-      {props.spinner ? (
-        <SpinnerComp />
-      ) : (
-        <div></div>
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Work />} exact />
+        <Route path="/ErrorFeedBack" element={<ErrorFeedBack />} exact />
+      </Routes>
+    </Router>
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    spinner: state.ui.spinner,
-  }
-}
-
-
-export default connect(mapStateToProps)(App)
+export default App
 
 
 
