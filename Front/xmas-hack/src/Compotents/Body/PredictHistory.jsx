@@ -11,8 +11,7 @@ function PredictHistory(props) {
         // React advises to declare the async function directly inside useEffect
         async function loadFiles() {
             try {
-                const files = await axios.get("http://85.192.34.254:8888/UploadDocs/GetAllFiles");
-                console.log(files["data"])
+                const files = await axios.get("http://localhost:5176/UploadDocs/GetAllFiles");
                 setFiles(files["data"])
             } catch (ex) {
                 console.log(ex);
@@ -27,9 +26,9 @@ function PredictHistory(props) {
 
         <div>
             {files.map(file => (
-                <a href={"http://85.192.34.254:8005/" + file.filePath}>
+                <a href={"http://85.192.34.254:8005/" + file.path}>
                     <LoadedFile
-                        fileName={file.fileName}
+                        fileName={file.name}
                         fileWeigth={0} />
                 </a>
             ))}

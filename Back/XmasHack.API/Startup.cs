@@ -33,7 +33,7 @@ namespace XmasHack.API
 
             services.AddHttpClient("CrudAPI", config =>
             {
-                config.BaseAddress = new Uri("https://localhost:5001/api/");
+                config.BaseAddress = new Uri(appSettings["CrudAPI"]);
                 config.Timeout = new TimeSpan(0, 0, 30);
                 config.DefaultRequestHeaders.Clear();
             });

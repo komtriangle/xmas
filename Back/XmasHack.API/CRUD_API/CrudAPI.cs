@@ -15,14 +15,13 @@ namespace XmasHack.API.CRUD_API
 		}
         public async Task<int> SaveDocs(SaveDocsRequest request)
         {
-            return 5;
-			using(var httpClient = _httpClientFactory.CreateClient())
+			using(var httpClient = _httpClientFactory.CreateClient("CrudAPI"))
 			{
-                var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+               // var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
-                using(var response = await httpClient.PostAsync("/save_doc", content))
+                using(var response = await httpClient.GetAsync($"/savedoc?name={request.FileName}&path={request.FilePath}"))
                 {
-                   if(response.StatusCode != System.Net.HttpStatusCode.Created)
+                   if(!response.IsSuccessStatusCode)
                     {
                         throw new Exception("Ошибка при запросе в Crud API");
 					}
@@ -38,17 +37,17 @@ namespace XmasHack.API.CRUD_API
             }
         }
 
-        public async Task<DocsResponse[]> GetAllDocs()
+        public async Task<GetAllDocumentsResponse> GetAllDocs()
 		{
-            using(var httpClient = _httpClientFactory.CreateClient())
+            using(var httpClient = _httpClientFactory.CreateClient("CrudAPI"))
             {
-                using(var response = await httpClient.GetAsync("/get_all_docs", HttpCompletionOption.ResponseHeadersRead))
+                using(var response = await httpClient.GetAsync("/getalldocs", HttpCompletionOption.ResponseHeadersRead))
                 {
-                    if(response.StatusCode != System.Net.HttpStatusCode.Created)
+                    if(!response.IsSuccessStatusCode)
                     {
                         throw new Exception("Ошибка при запросе в Crud API");
                     }
-                    var docses = JsonConvert.DeserializeObject<DocsResponse[]>(await response.Content.ReadAsStringAsync());
+                    var docses = JsonConvert.DeserializeObject<GetAllDocumentsResponse>(await response.Content.ReadAsStringAsync());
 
                     if(docses == null)
 					{
