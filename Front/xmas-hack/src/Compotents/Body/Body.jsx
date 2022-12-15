@@ -8,6 +8,7 @@ import LoadFiles from "./LoadFiles";
 import PredictHistory from "./PredictHistory";
 import LoadedFiles from "./LoadedFiles";
 
+
 function Body(props) {
 
     return (<div className="body">
