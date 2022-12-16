@@ -30,14 +30,15 @@ class ModelOutputForClass(BaseModel):
 
 
 class ModelOutputs(BaseModel):
-    task_id: str
+    task_id: int
     # paragraphs: List[Paragraph]
     predicted_class: str
     outputs_for_class: Dict[str, ModelOutputForClass]
 
 
 class ModelInputs(BaseModel):
-    doc_path: Path
+    task_id: int
+    doc_path: str
 
 
 _RE_SPACE = re.compile('\s+')
@@ -63,7 +64,7 @@ class Predictor:
         self._ensemble = ensemble
 
     def process(self, inputs: ModelInputs) -> ModelOutputs:
-        doc = self.preprocess_str(parser.from_file(str(inputs.doc_path))['content'])
+        doc = self.preprocess_str(parser.from_file(str(Path('docs') / inputs.doc_path))['content'])
         predicts = []
         importances_all = []
         for i in range(_N_MODELS):
@@ -89,9 +90,10 @@ class Predictor:
             shapley_bad = list(zip(shapley_bad.index, [x.item() for x in shapley_bad.values]))
             shapley_good = list(zip(shapley_good.index, [x.item() for x in shapley_good.values]))
             out_for_class[tgt] = ModelOutputForClass(probability=proba.item(),
-                                                     tfidf_top_good=shapley_good,
+                                                     tfidf_top_good=shapley_good[::-1],
                                                      tfidf_top_bad=shapley_bad)
         return ModelOutputs(
+            task_id=inputs.task_id,
             predicted_class=predicts.sort_values().index[-1],
             outputs_for_class=out_for_class
         )
@@ -100,3 +102,13 @@ class Predictor:
         s = _RE_SPACE.sub(' ', s)
         s = _RE_UNDER.sub('__', s)
         return s.strip()
+
+
+if __name__ == '__main__':
+    pred = Predictor(Path('./model'))
+    res = pred.process(ModelInputs(task_id=0, doc_path='2b25ecf601a9ce0c2a33c8e1d9746df2.doc'))
+    print('TOP положительных слов')
+    print(*res.outputs_for_class[res.predicted_class].tfidf_top_good, sep='\n')
+    print('TOP отрицательных слов')
+    print(*res.outputs_for_class[res.predicted_class].tfidf_top_bad, sep='\n')
+    # print(res)
