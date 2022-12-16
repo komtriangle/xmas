@@ -151,5 +151,32 @@ def get_all_docs():
     return {"Message": "Successful", "documents": data}
 
 
+
+@app.get("/get_docs", description=("Возвращает документ по id"))
+def get_all_docs(id):
+    docs = document.select().where(document.id == id)
+
+    if len(docs) == 0:
+         return {"Message": "Not found", "document": null}
+    else:
+        doc = docs[0]
+        query = predict.select() \
+            .join(document_type, on=(document_type.id == predict.type_id)) \
+            .where(predict.document_id == doc.id)
+
+        type_name = None
+        if query:
+            type_name = query.get().type_id.name
+
+        data = {
+            "id": doc.id,
+            "name": doc.name,
+            "path": doc.path,
+            "status": doc.status,
+            "type": type_name
+        }
+    return {"Message": "Successful", "document": data}
+
+
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
