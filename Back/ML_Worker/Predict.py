@@ -2,16 +2,11 @@
 
 from abc import abstractmethod
 from functools import wraps
-import json
 import os
-import pika
 import time
 import logging
 from collections import namedtuple
 import requests as req
-import threading
-import db_handle
-import sys
 from predictor import Predictor
 from RabbitMQ import RMQHandlerPredict
 
@@ -35,7 +30,6 @@ def main():
         "login": rabbitmqLogin,
         "password": rabbitmqPassword,
         "queueName": "predict", 
-        "database": db_handle.PredictModelDB(),
         "data_handler": predictor
     }
     rmq_predict = RMQHandlerPredict(**args)
