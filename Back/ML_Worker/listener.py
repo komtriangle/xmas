@@ -11,10 +11,12 @@ if __name__ == '__main__':
     channel = connection.channel()
     pred = Predictor(Path('./model'))
 
-    def callbackFunctionForQueueA(ch,method,properties,body):
+    def callbackFunctionForQueueA(ch, method, properties, body):
         try:
-            result = pred.process(ModelInputs.parse_raw(body))
-            print(result)
+            ins = ModelInputs.parse_raw(body)
+            result = pred.process(ins).json(indent=4, ensure_ascii=False)
+            with (Path('output') / Path(ins.doc_path).with_suffix('.json')).open('w') as f:
+                f.write(result)
         except Exception as e:
             print(e, file=sys.stderr)
     channel.basic_consume(queue='predict', on_message_callback=callbackFunctionForQueueA, auto_ack=True)
