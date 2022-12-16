@@ -49,6 +49,7 @@ namespace XmasHack.API.Controllers
                 }
                 catch(Exception ex)
                 {
+					Console.WriteLine(ex.Message);
                     return BadRequest($"Ошибка во время сохрвнения файла: {file.FileName}. {ex.Message}");
                 }
                
@@ -68,6 +69,7 @@ namespace XmasHack.API.Controllers
 			}
             catch(Exception ex)
 			{
+				Console.WriteLine(ex.Message);
                 return BadRequest("Ошибка во время получения файлов");
 			}
         }
