@@ -34,6 +34,21 @@ services:
     ports:
       - '8888:80'
 
+  crud_api:
+    image: ${DOCKER_REGISTRY-}crud_api
+    build:
+      context: ../
+      dockerfile: Back/Crud.API/Dockerfile
+    ports:
+      - '8887:8000'
+  # front:
+  #   image: ${DOCKER_REGISTRY-}front
+  #     build:
+  #       context: ../
+  #       dockerfile: Front/xmas-hack/Dockerfile
+  #     ports:
+  #       - '3001:3000'
+
   nginx-static:
       container_name: nginx-static
       image: nginx-static
