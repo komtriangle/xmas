@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import LoadedFile from "./LoadedFile";
+import WordCloud from "./WordCloud";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux";
+import { storeActions } from "../../store/store"
 
 function PredictHistory(props) {
 
@@ -21,19 +26,43 @@ function PredictHistory(props) {
         loadFiles();
     }, []);
 
+    function chooseDocs(fileName) {
+        console.log(files)
+        debugger;
+        props.setCurrentFile({
+            name: fileName
+        })
+    }
+
+
 
     return (<div>
 
         <div>
             {files.map(file => (
-                <a href={"http://85.192.34.254:8005/" + file.path}>
+                <Link to={"/DocsInfo"}
+                    onClick={() => chooseDocs(file.name)}>
                     <LoadedFile
                         fileName={file.name}
                         fileWeigth={0} />
-                </a>
+                </Link>
             ))}
         </div>
     </div>)
 }
 
-export default PredictHistory;
+function mapStateToProps(state) {
+    return {
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        setChoosedFiles: storeActions.setChoosedFiles,
+        setSpinnerStatus: storeActions.setSpinnerStatus,
+        setCurrentFile: storeActions.setCurrentFile
+    }, dispatch)
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PredictHistory)

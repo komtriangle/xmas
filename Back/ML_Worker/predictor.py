@@ -104,11 +104,4 @@ class Predictor:
         return s.strip()
 
 
-if __name__ == '__main__':
-    pred = Predictor(Path('./model'))
-    res = pred.process(ModelInputs(task_id=0, doc_path='2b25ecf601a9ce0c2a33c8e1d9746df2.doc'))
-    print('TOP положительных слов')
-    print(*res.outputs_for_class[res.predicted_class].tfidf_top_good, sep='\n')
-    print('TOP отрицательных слов')
-    print(*res.outputs_for_class[res.predicted_class].tfidf_top_bad, sep='\n')
-    # print(res)
+
