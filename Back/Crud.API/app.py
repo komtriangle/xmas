@@ -176,6 +176,17 @@ def get_all_docs(id):
             "type": type_name
         }
     return {"Message": "Successful", "document": data}
+    
+@app.get("/get_all_types", description=("Возвращает список всех типов документов"))
+def get_all_types():
+    types = document_type.select()
+    data = []
+    for type in types:
+        data.append({
+            "id": type.id,
+            "name": type.name,
+        })
+    return {"Message": "Successful", "types": data}
 
 
 if __name__ == "__main__":
