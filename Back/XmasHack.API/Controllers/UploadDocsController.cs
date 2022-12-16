@@ -43,7 +43,8 @@ namespace XmasHack.API.Controllers
 
                     _rabbitMQDocsPublisher.Send(new DocsMessage()
                     {
-                        Path = fileName
+                        Path = fileName,
+                        TaskId = docsId
                     });
                 }
                 catch(Exception ex)
