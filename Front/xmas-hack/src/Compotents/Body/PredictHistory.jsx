@@ -18,6 +18,7 @@ function PredictHistory(props) {
             try {
                 const files = await axios.get("http://85.192.34.254:8888/UploadDocs/GetAllFiles");
                 setFiles(files["data"])
+                console.log(files["data"])
             } catch (ex) {
                 console.log(ex);
             }
@@ -26,11 +27,12 @@ function PredictHistory(props) {
         loadFiles();
     }, []);
 
-    function chooseDocs(fileName) {
+    function chooseDocs(fileName, filePath) {
         console.log(files)
         debugger;
         props.setCurrentFile({
-            name: fileName
+            name: fileName,
+            path: filePath
         })
     }
 
@@ -41,9 +43,10 @@ function PredictHistory(props) {
         <div>
             {files.map(file => (
                 <Link to={"/DocsInfo"}
-                    onClick={() => chooseDocs(file.name)}>
+                    onClick={() => chooseDocs(file.name, file.path)}>
                     <LoadedFile
                         fileName={file.name}
+                        filePath={file.path}
                         fileWeigth={0} />
                 </Link>
             ))}

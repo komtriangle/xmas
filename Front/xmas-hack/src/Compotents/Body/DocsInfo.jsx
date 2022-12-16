@@ -18,7 +18,7 @@ function DocsInfo(props) {
                         </div>
                         <div className="wordCloud">
                             <WordCloud
-                                fileName={props.docsIndo?.name} />
+                                fileName={props.docsIndo?.path} />
                         </div>
                     </div>
                 ) : (
