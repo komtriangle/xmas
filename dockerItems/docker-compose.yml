@@ -43,6 +43,23 @@ services:
       restart: always
       ports:
           - "8005:80"
+          
+  ml_worker:
+    build: ../Back/ML_Worker
+    restart: always
+    depends_on:
+      - rabbitmq
+    env_file:
+      - mqtt.env
+      - TORCH_HOME=/ml/.cache/torch
+    networks:
+      - xmas
+    volumes:
+      - ../backend/worker:/app
+      - ../databases/models:/models
+      - ../ml:/ml
+    entrypoint: 
+      ./predict_worker.py
 
 networks:
   xmas:
