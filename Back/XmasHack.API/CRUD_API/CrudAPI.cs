@@ -19,7 +19,7 @@ namespace XmasHack.API.CRUD_API
 			{
                // var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
-                using(var response = await httpClient.GetAsync($"/savedoc?name={request.FileName}&path={request.FilePath}"))
+                using(var response = await httpClient.PostAsync($"/save_doc?name={request.FileName}&path={request.FilePath}", null))
                 {
                    if(!response.IsSuccessStatusCode)
                     {
@@ -41,7 +41,7 @@ namespace XmasHack.API.CRUD_API
 		{
             using(var httpClient = _httpClientFactory.CreateClient("CrudAPI"))
             {
-                using(var response = await httpClient.GetAsync("/getalldocs", HttpCompletionOption.ResponseHeadersRead))
+                using(var response = await httpClient.GetAsync("/get_all_docs", HttpCompletionOption.ResponseHeadersRead))
                 {
                     if(!response.IsSuccessStatusCode)
                     {
