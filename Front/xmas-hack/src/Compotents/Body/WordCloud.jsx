@@ -9,7 +9,7 @@ function WordCloud(props) {
 
     useEffect(() => {
 
-        let docs = require(removeExtension(`/documents/${props.fileName})`));
+        let docs = require(removeExtension(`/documents/${props.fileName}).json`));
 
         const predictedClass = docs.predicted_class;
         const predictedClassInfo = docs.outputs_for_class[predictedClass];
