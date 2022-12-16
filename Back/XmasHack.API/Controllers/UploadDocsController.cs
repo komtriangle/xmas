@@ -74,6 +74,23 @@ namespace XmasHack.API.Controllers
 			}
         }
 
+        [HttpGet]
+        [Route("GetJsonByName")]
+        public IActionResult GetJsonByName(string name)
+		{
+			try
+			{
+                string file = System.IO.File.ReadAllText($"/predict_info/{name}.json");
+                return Ok(file);
+            }
+            catch(Exception ex)
+			{
+                return BadRequest("Ошибка во время получения файла");
+			}
+
+   
+        }
+
         private  async Task SaveDocsToFolder(IFormFile file, string docsName)
         {
             string filePath = Path.Combine(_appSettings.DocumentPath, docsName);
