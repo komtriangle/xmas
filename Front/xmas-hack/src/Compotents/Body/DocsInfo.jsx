@@ -14,7 +14,7 @@ function DocsInfo(props) {
                 props.docsIndo?.name ? (
                     <div className="docsInfo">
                         <div className="document-type">
-                            <p>Определенный класс документа: <span className="type-name">{props.docsIndo?.name}</span></p>
+                            <p>Название документа: <span className="type-name">{props.docsIndo?.name}</span></p>
                         </div>
                         <div className="wordCloud">
                             <WordCloud

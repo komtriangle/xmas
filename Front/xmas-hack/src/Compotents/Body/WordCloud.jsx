@@ -6,16 +6,18 @@ import { TagCloud } from 'react-tagcloud';
 function WordCloud(props) {
 
     const [goodWords, setGoodWords] = useState([]);
+    const [predictedClass, setPredictedClass] = useState([]);
 
     useEffect(() => {
 
-        let docs = fetch(`http://85.192.34.254:8888/UploadDocs/GetJsonByName?name=3e5e5e82-2321-4c7d-85c8-be39244fa2ad-Указатели (подробно)`)
+        fetch(`http://85.192.34.254:8888/UploadDocs/GetJsonByName?name=${removeExtension(props.fileName)}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 // console.log(responseJson)
-                const predictedClass = responseJson.predicted_class;
+                const predClass = responseJson.predicted_class;
+                setPredictedClass(predClass)
                 console.log(predictedClass)
-                const predictedClassInfo = responseJson.outputs_for_class[predictedClass];
+                const predictedClassInfo = responseJson.outputs_for_class[predClass];
                 const predicedClassGoodWords = predictedClassInfo.tfidf_top_good.map(word => {
                     return {
                         value: word[0],
@@ -29,12 +31,17 @@ function WordCloud(props) {
     }, [])
 
     return (
-        <div>
-            <TagCloud
-                minSize={12}
-                maxSize={35}
-                tags={goodWords}
-            />
+        <div className="word-cloud">
+            <div className="document-type">
+                <p>Предсказанный класс: {predictedClass}</p>
+            </div>
+            <div className="tag-cloud-item">
+                <TagCloud
+                    minSize={12}
+                    maxSize={35}
+                    tags={goodWords}
+                />
+            </div>
         </div>
     )
 

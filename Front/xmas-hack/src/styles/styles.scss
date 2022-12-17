@@ -246,10 +246,6 @@ $border-gray: #3d3d3d;
 
 .document-type{
     padding: 15px;
-
-    .document-type{
-        font-weight: bold;
-    }
 }
 
 .docsInfo{
@@ -262,4 +258,23 @@ $border-gray: #3d3d3d;
         max-width: 50%;
     }
 
+}
+
+
+.document-type{
+    font-weight: bold;
+    text-decoration:underline; 
+}
+
+.word-cloud{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tag-cloud-item{
+    border: 2px solid #5bcaff;
+    padding: 20px;
+    border-radius: 5px;
 }
