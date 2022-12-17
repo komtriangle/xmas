@@ -39,6 +39,8 @@ services:
     build:
       context: ../
       dockerfile: Back/Crud.API/Dockerfile
+    depends_on:
+      - postgres
     ports:
       - '8887:8000'
   # front:
@@ -58,6 +60,16 @@ services:
       restart: always
       ports:
           - "8005:80"
+          
+  ml:
+    build: 
+        context: ../
+        dockerfile: Back/ML_Worker/Dockerfile
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ../documents:/opt/docs
+      - ../predict_info:/opt/output
 
 networks:
   xmas:

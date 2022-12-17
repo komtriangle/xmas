@@ -6,6 +6,7 @@ import axios from "axios";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 function LoadFiles(props) {
+
     const [files, setFiles] = useState([])
 
     const fileInputOnChange = (files) => {
@@ -42,27 +43,24 @@ function LoadFiles(props) {
     }
 
     return (
-        <div className="loadfiles daniil_galimov">
-            {/* <div className="load-files-instruction">Здесь вы можете определить тип договоров. Для этого вам надо выбрать один или несколько документов
+        <div className="loadfiles">
+            <div className="load-files-instruction">Здесь вы можете определить тип договоров. Для этого вам надо выбрать один или несколько документов
                 с вашего компьютера. Допустимые типу файлов: doc, docx, pdf.
-            </div> */}
+            </div>
+            <label for="files" className="btn"></label>
             <input
                 id="files"
-                // style="position: relative"
-                className="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700 button_on_top"
                 type="file"
                 multiple="multiple"
                 accept=".doc,.docx,application/pdf, application/msword"
                 onChange={e => fileInputOnChange([...e.target.files])} />
             <br />
             <button
-                className="inline-block rounded-lg px-4 py-1.5 text-base font-semibold leading-7 text-gray-900 ring-1 ring-gray-900/10 hover:ring-gray-900/20 button_on_top"
+                className="send-files-btn"
                 type='submit'
-                // className="button_on_top"
                 onClick={sendFilesToBack}>
                 <p>Определить тип</p>
             </button>
-            <label className="btn"></label>
         </div >)
 }
 

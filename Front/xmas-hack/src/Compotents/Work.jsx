@@ -10,8 +10,6 @@ import 'react-notifications/lib/notifications.css';
 function Work(props) {
 
     return (<div className="App">
-        
-        <Header />
         <NotificationContainer />
         <Body />
         {props.spinner ? (
