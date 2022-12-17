@@ -50,7 +50,6 @@ export const storeActions = {
     },
 
     setCurrentFile: (docs) => async (dispatch) => {
-        debugger
         dispatch({
             type: setDocsInfo,
             payload: {
@@ -94,7 +93,6 @@ export const reducer = (state = initialState, action) => {
             }
         }
         case setDocsInfo: {
-            debugger;
             const { docs } = action.payload;
             return {
                 ...state,

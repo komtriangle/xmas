@@ -28,8 +28,6 @@ function PredictHistory(props) {
     }, []);
 
     function chooseDocs(fileName, filePath) {
-        console.log(files)
-        debugger;
         props.setCurrentFile({
             name: fileName,
             path: filePath
