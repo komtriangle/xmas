@@ -81,7 +81,7 @@ namespace XmasHack.API.Controllers
 			try
 			{
                 string file = System.IO.File.ReadAllText($"/predict_info/{name}.json");
-                return Json(file);
+                return Ok(file);
             }
             catch(Exception ex)
 			{

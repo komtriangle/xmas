@@ -9,11 +9,12 @@ function WordCloud(props) {
 
     useEffect(() => {
 
-        let docs = require(`http://85.192.34.254:8888/UploadDocs/GetJsonByName?name=3e5e5e82-2321-4c7d-85c8-be39244fa2ad-Указатели (подробно)`)
+        let docs = fetch(`http://85.192.34.254:8888/UploadDocs/GetJsonByName?name=3e5e5e82-2321-4c7d-85c8-be39244fa2ad-Указатели (подробно)`)
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson)
+                // console.log(responseJson)
                 const predictedClass = responseJson.predicted_class;
+                console.log(predictedClass)
                 const predictedClassInfo = responseJson.outputs_for_class[predictedClass];
                 const predicedClassGoodWords = predictedClassInfo.tfidf_top_good.map(word => {
                     return {
