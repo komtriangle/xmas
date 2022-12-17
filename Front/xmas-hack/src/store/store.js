@@ -5,7 +5,6 @@ import { PAGES_TYPE } from '../Constants/Pages'
 const setPage = "SET_PAGE";
 const setChoosedFiles = "SET_CHOOSED_FILES";
 const setSpinnerStatus = "SET_SPINNER_STATUS";
-const setDocsInfo = "SET_DOCS_INFO"
 
 let initialState = {
     ui: {
@@ -13,10 +12,7 @@ let initialState = {
         spinner: false
     },
     data: {
-        files: [],
-        currentDocsInfo: {
-            name: ""
-        }
+        files: []
     }
 }
 
@@ -45,15 +41,6 @@ export const storeActions = {
             type: setSpinnerStatus,
             payload: {
                 status
-            }
-        })
-    },
-
-    setCurrentFile: (docs) => async (dispatch) => {
-        dispatch({
-            type: setDocsInfo,
-            payload: {
-                docs
             }
         })
     }
@@ -89,16 +76,6 @@ export const reducer = (state = initialState, action) => {
                 ui: {
                     ...state.ui,
                     spinner: status
-                }
-            }
-        }
-        case setDocsInfo: {
-            const { docs } = action.payload;
-            return {
-                ...state,
-                data: {
-                    ...state.data,
-                    currentDocsInfo: docs
                 }
             }
         }

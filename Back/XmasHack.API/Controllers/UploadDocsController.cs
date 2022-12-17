@@ -43,13 +43,11 @@ namespace XmasHack.API.Controllers
 
                     _rabbitMQDocsPublisher.Send(new DocsMessage()
                     {
-                        Path = fileName,
-                        TaskId = docsId
+                        Id = docsId
                     });
                 }
                 catch(Exception ex)
                 {
-					Console.WriteLine(ex.Message);
                     return BadRequest($"Ошибка во время сохрвнения файла: {file.FileName}. {ex.Message}");
                 }
                
@@ -69,26 +67,8 @@ namespace XmasHack.API.Controllers
 			}
             catch(Exception ex)
 			{
-				Console.WriteLine(ex.Message);
                 return BadRequest("Ошибка во время получения файлов");
 			}
-        }
-
-        [HttpGet]
-        [Route("GetJsonByName")]
-        public IActionResult GetJsonByName(string name)
-		{
-			try
-			{
-                string file = System.IO.File.ReadAllText($"/predict_info/{name}.json");
-                return Ok(file);
-            }
-            catch(Exception ex)
-			{
-                return BadRequest("Ошибка во время получения файла");
-			}
-
-   
         }
 
         private  async Task SaveDocsToFolder(IFormFile file, string docsName)
