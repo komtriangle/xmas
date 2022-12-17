@@ -8,11 +8,7 @@ import LoadFiles from "./LoadFiles";
 import PredictHistory from "./PredictHistory";
 import LoadedFiles from "./LoadedFiles";
 import Example from "./full_body";
-import MenuItems from "../Header/MenuItems";
-import Logo from "../Header/Logo";
-import Header from "../Header/Header";
-// import Body from "../Body/Body";
-import SpinnerComp from "../SpinnerComp";
+
 
 
 function Body(props) {
@@ -28,7 +24,7 @@ function Body(props) {
                     <LoadFiles />
                     <LoadedFiles />
                 </div>
-                
+
             ) :
             (
                 <PredictHistory />

@@ -9,8 +9,6 @@ import { storeActions } from "../../store/store"
 import axios from "axios";
 import { PAGES_TYPE } from "../../Constants/Pages"
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import MenuItems from "../Header/MenuItems";
-import Logo from "../Header/Logo";
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -19,19 +17,19 @@ const navigation = [
   { name: 'Company', href: '#' },
 ]
 
-export default function Example(props) {
-    const [files, setFiles] = useState([])
+function Example(props) {
+  const [files, setFiles] = useState([])
 
-    const fileInputOnChange = (files) => {
-        setFiles(files)
-        var filesToStore = files.map(file => {
-            return {
-                name: file.name,
-                size: Math.round(file.size / 1024)
-            }
-        })
-        props.setChoosedFiles(filesToStore)
-    }
+  const fileInputOnChange = (files) => {
+    setFiles(files)
+    var filesToStore = files.map(file => {
+      return {
+        name: file.name,
+        size: Math.round(file.size / 1024)
+      }
+    })
+    props.setChoosedFiles(filesToStore)
+  }
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -39,40 +37,27 @@ export default function Example(props) {
   const sendFilesToBack = async () => {
 
     if (files.length === 0) {
-        NotificationManager.warning('Необходимо выбрать файлы', '', 3000);
-        return;
+      NotificationManager.warning('Необходимо выбрать файлы', '', 3000);
+      return;
     }
     const formData = new FormData();
     files.forEach(file => {
-        formData.append("files", file);
+      formData.append("files", file);
     })
     try {
-        props.setSpinnerStatus(true);
-        const res = await axios.post("http://62.84.127.116:8888/UploadDocs", formData);
-        NotificationManager.info('Файлы успешно загружены', '', 3000);
-        props.setChoosedFiles([])
+      props.setSpinnerStatus(true);
+      const res = await axios.post("http://62.84.127.116:8888/UploadDocs", formData);
+      NotificationManager.info('Файлы успешно загружены', '', 3000);
+      props.setChoosedFiles([])
     } catch (ex) {
-        NotificationManager.error('Произошла ошибка во время загрузки файлов', '', 3000);
-        console.log(ex);
+      NotificationManager.error('Произошла ошибка во время загрузки файлов', '', 3000);
+      console.log(ex);
     }
     props.setSpinnerStatus(false);
-}
+  }
 
 
-function mapStateToProps(state) {
-    return {
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        setChoosedFiles: storeActions.setChoosedFiles,
-        setSpinnerStatus: storeActions.setSpinnerStatus
-    }, dispatch)
-
-}
-
-// export default connect(mapStateToProps, mapDispatchToProps)(LoadFiles)
+  // export default connect(mapStateToProps, mapDispatchToProps)(LoadFiles)
 
   return (
     <div className="isolate bg-white">
@@ -89,7 +74,7 @@ function mapDispatchToProps(dispatch) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-        
+
           <path
             fill="url(#45de2b6b-92d5-4d68-a6a0-9b9b2abad533)"
             fillOpacity=".3"
@@ -112,96 +97,6 @@ function mapDispatchToProps(dispatch) {
       </div>
       <div className="px-6 pt-6 lg:px-8">
         <div>
-        
-          {/* <nav className="flex h-9 items-center justify-between" aria-label="Global">
-            <div className="flex lg:min-w-0 lg:flex-1" aria-label="Global">
-              <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
-                <img className="h-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
-              </a>
-            </div>
-            <div className="flex lg:hidden">
-              <button
-                type="button"
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                onClick={() => setMobileMenuOpen(true)}
-              >
-                <span className="sr-only">Open main menu</span>
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-center lg:gap-x-12 button_on_top">
-              {<>
-                <button className="font-semibold text-gray-900 hover:text-gray-900 button_on_top"
-                OnClick={() => props.setPage(PAGES_TYPE.LOAD_FILES)}>
-                  {"Загрузка файлов"}
-                </button>
-                
-                <button className="font-semibold text-gray-900 hover:text-gray-900 button_on_top"
-                OnClick={() => props.setPage(PAGES_TYPE.PREDICT_HISTORY)}>
-                  {"История распознаваний"}
-                </button>
-                </>
-              }
-            </div>
-            <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-end">
-              <a
-                href="#"
-                className="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
-              >
-                Log in
-              </a>
-            </div>
-          </nav> */}
-          {/* <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-            <Dialog.Panel focus="true" className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden">
-              <div className="flex h-9 items-center justify-between">
-                <div className="flex">
-                  <a href="#" className="-m-1.5 p-1.5">
-                    <span className="sr-only">Your Company</span>
-                    <img
-                      className="h-8"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                      alt=""
-                    />
-                  </a>
-                </div>
-                <div className="flex">
-                  <button
-                    type="button"
-                    className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <span className="sr-only">Close menu</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-              <div className="mt-6 flow-root">
-                <div className="-my-6 divide-y divide-gray-500/10">
-                  <div className="space-y-2 py-6">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                  <div className="py-6">
-                    <a
-                      href="#"
-                      className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
-                    >
-                      Log in
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </Dialog.Panel>
-          </Dialog> */}
         </div>
       </div>
       <main>
@@ -211,20 +106,20 @@ function mapDispatchToProps(dispatch) {
               <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                 <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                   <span className="text-gray-600">
-                    Announcing our next round of funding.{' '}
-                    <a href="#" className="font-semibold text-indigo-600">
+                    К загруженным файлам.{' '}
+                    <span onClick={() => props.setPage(PAGES_TYPE.PREDICT_HISTORY)} href="#" className="font-semibold text-indigo-600">
                       <span className="absolute inset-0" aria-hidden="true" />
-                      Read more <span aria-hidden="true">&rarr;</span>
-                    </a>
+                      <span aria-hidden="true">&rarr;</span>
+                    </span>
                   </span>
                 </div>
               </div>
               <div>
                 <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
-                  Data to enrich your online business
+                  Доверь свою работу нейронным подходам
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
-                Здесь вы можете определить тип договоров. Для этого вам надо выбрать один или несколько документов с вашего компьютера. Допустимые типу файлов: doc, docx, pdf.
+                  Здесь вы можете определить тип договоров. Для этого вам надо выбрать один или несколько документов с вашего компьютера. Допустимые типу файлов: doc, docx, pdf.
                 </p>
               </div>
               {/* <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
@@ -261,3 +156,20 @@ function mapDispatchToProps(dispatch) {
     </div>
   )
 }
+
+
+function mapStateToProps(state) {
+  return {
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setChoosedFiles: storeActions.setChoosedFiles,
+    setSpinnerStatus: storeActions.setSpinnerStatus,
+    setPage: storeActions.setPage
+  }, dispatch)
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Example)

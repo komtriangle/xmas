@@ -9,6 +9,7 @@ function App() {
   return (
     <div>
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Work />} exact />
           <Route path="/ErrorFeedBack" element={<ErrorFeedBack />} exact />

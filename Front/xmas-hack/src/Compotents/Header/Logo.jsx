@@ -3,13 +3,16 @@ import { connect } from "react-redux"
 import { bindActionCreators } from "redux";
 import { storeActions } from "../../store/store"
 import { PAGES_TYPE } from "../../Constants/Pages"
+import { Link } from "react-router-dom";
 
 
 function Logo(props) {
 
-    return (<div className="team-logo">
-        <a className="logo" onClick={() => props.setPage(PAGES_TYPE.LOAD_FILES)}>MISIS AI Lab</a>
-    </div>)
+    return (<Link to="/" style={{ textDecoration: 'none' }}>
+        <div className="team-logo">
+            <a className="logo" onClick={() => props.setPage(PAGES_TYPE.LOAD_FILES)}>MISIS AI Lab</a>
+        </div>
+    </Link>)
 }
 
 
