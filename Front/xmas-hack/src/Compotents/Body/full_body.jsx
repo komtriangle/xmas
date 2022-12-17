@@ -48,7 +48,7 @@ export default function Example(props) {
     })
     try {
         props.setSpinnerStatus(true);
-        const res = await axios.post("http://85.192.34.254:8888/UploadDocs", formData);
+        const res = await axios.post("http://62.84.127.116:8888/UploadDocs", formData);
         NotificationManager.info('Файлы успешно загружены', '', 3000);
         props.setChoosedFiles([])
     } catch (ex) {

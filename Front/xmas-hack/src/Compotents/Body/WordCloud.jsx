@@ -10,7 +10,7 @@ function WordCloud(props) {
 
     useEffect(() => {
 
-        fetch(`http://85.192.34.254:8888/UploadDocs/GetJsonByName?name=${removeExtension(props.fileName)}`)
+        fetch(`http://62.84.127.116:8888/UploadDocs/GetJsonByName?name=${removeExtension(props.fileName)}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 // console.log(responseJson)
